@@ -1,12 +1,19 @@
 server:
-  port: ${SERVER_PORT:3000}
+  port: ${SERVER_PORT}
 
 spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: ${DB_DRIVER_CLASS_NAME}
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,14 +21,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  security:
-    jwt:
-      secret: ${JWT_SECRET}
-      expirationMs: ${JWT_EXPIRATION_MS:86400000}
-
 eureka:
   client:
-    serviceUrl:
+    service-url:
       defaultZone: http://eureka-server:2000/eureka
   instance:
     prefer-ip-address: true
