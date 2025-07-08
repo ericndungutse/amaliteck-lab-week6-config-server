@@ -17,6 +17,11 @@ spring:
           uri: lb://restaurant-service
           predicates:
             - Path=/api/v1/restaurants/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: restaurantServiceCircuitBreaker
+                fallbackUri: forward:/restaurant-fallback
         - id: order-service
           uri: lb://order-service
           predicates:
@@ -27,3 +32,13 @@ eureka:
       defaultZone: ${SPRING_EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
   instance:
     prefer-ip-address: true
+
+resilience4j:
+  circuitBreaker:
+    instances:
+      restaurantServiceCircuitBreaker:
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
