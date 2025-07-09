@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: ${SPRING_APPLICATION_NAME}
+  config:
+    fail-fast: true
+    retry:
+      maxAttempts: 20 # number of retry attempts
+      initialInterval: 2000 # 2 seconds delay before first retry
+      multiplier: 1.5 # increase delay by 1.5x each time
   rabbitmq:
     host: ${RABBITMQ_HOST}
     port: ${RABBITMQ_PORT}
@@ -23,6 +29,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, env, prometheus
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
 eureka:
   client:
     service-url:

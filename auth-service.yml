@@ -18,6 +18,17 @@ spring:
     jwt:
       secret: ${JWT_SECRET}
       expirationMs: ${JWT_EXPIRATION_MS:86400000}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, env, prometheus
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
 
 eureka:
   client:

@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:4000}
+  port: ${SERVER_PORT}
 
 spring:
   datasource:
@@ -20,6 +20,17 @@ eureka:
       defaultZone: ${SPRING_EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
   instance:
     prefer-ip-address: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, env, prometheus
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
 logging:
   level:
     org.hibernate.SQL: debug

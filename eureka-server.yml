@@ -8,3 +8,14 @@ eureka:
     prefer-ip-address: true
   server:
     enable-self-preservation: ${EUREKA_SERVER_ENABLE_SELF_PRESERVATION}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, env, prometheus
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
